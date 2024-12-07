@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .container{
+            display: flexbox;
+            height: 400px;
+            width: 100%;
+            justify-items: center;
+        }
+        .white-container{
+            height: 150px;
+            width: 95%;
+            background-color: white;
+            border-radius: 5px;
+        }
+        .chat-container {
+            width: 300px;
+            height: 400px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .chat-box {
+            flex-grow: 1;
+            padding-bottom: 10px;
+            overflow-y: scroll;
+        }
+        .chat-box p {
+            margin: 5px;
+            padding: 5px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+        .input-area {
+            display: flex;
+            margin-top: 10px;
+        }
+        .input-area input {
+            flex-grow: 1;
+            padding: 5px;
+        }
+        .input-area button {
+            padding: 5px 10px;
+            margin-left: 5px
+        }
+        .input-area input {
+            flex-grow: 1;
+            padding: 5px;
+        }
+        .input-area button {
+            padding: 5px 10px;
+            margin-left: 5px;
+        }
+        .questions {
+            margin-top: 10px;
+        }
+        .questions button {
+            margin: 5px;
+            padding: 8px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .questions button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <title>chatbot</title>
+</head>
+<body>
+    <div class="container">
+    
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Type a custom message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+        <div class="questions" id="questions">
+            <button onclick="askQuestion('What is your name?')">What is your name?</button>
+            <button onclick="askQuestion('How do i center a div?')">How do i center a div?</button>
+            <button onclick="askQuestion('What can you do?')">What can you do?</button>
+            <button onclick="askQuestion('What should i do now?')">What should i do now?</button>
+        </div>
+        
+    </div>
+    <div class="white-container">
+        <h2 style="margin: 10px; padding: 10px;">Time:</h2>
+        <p id="time" style="margin: 10px; font-size: 30px;"></p>
+    </div>
+    </div>
+    <script>
+        const responses = {
+            "What is your name?":"Im a chatbot created using HTML and Javascript",
+            "How do i center a div?":"You can center a div by making a flex container and then adjust the height and make the width 100% and then use justify content/items (depends on the situation) and finaly put the items you wanna center, mainly div",
+            "What can you do?":"i can chat with you and answer predefined questions.",
+            "What should i do now?":"you can go to samdoescodes.epizy.com and probably explore"
+        };
+        const time = new Date();
+        document.getElementById("time").innerHTML = time;
+        function sendMessage(){
+            const userInput = document.getElementById('user-input').value;
+            if(userInput.trim() === '') return;
+            displayMessage('You: '+ userInput);
+            setTimeout(()=>{
+                displayMessage('Bot: '+ userInput)
+            }, 500);
+            document.getElementById('user-input').value = ""
+        }
+        function askQuestion(question){
+            displayMessage('You: '+ question)
+            const botResponse = responses[question]|| "Sorry i didn't understand that";
+            setTimeout(() => {
+                displayMessage('Bot: '+ botResponse)
+            }, 500)
+        }
+        function displayMessage(message){
+            const chatBox = document.getElementById('chat-box');
+            const messageElement = document.createElement('p');
+            messageElement.textContent = message;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight
+        }
+    </script>
+</body>
+</html>
